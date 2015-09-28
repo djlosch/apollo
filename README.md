@@ -6,7 +6,7 @@ If you're getting adblocked, you should know what the impact is.  Apollo is an a
 
 Adblockers use filter matching -- they check element ids and classes.  If there's a match, the adblocker reduces the element height to zero, or removes it from the page entirely.  If you know the div should be there (or be a certain height), but it's not, then the visitor probably has adblock enabled.
 
-By default, Apollo attempts to log the adblock detector results to your [Google Analytics](http://www.google.com/analytics/) (GA) profile. You can use universal analytics (analytics.js) which uses `ga()`, or either legacy implementations from ga.js (`trackEvent()` and `_gaq.push()`).
+By default, Apollo attempts to log the adblock detector results to your [Google Analytics](http://www.google.com/analytics/) (GA) profile.  Once you've added the script to your page, you'll see the results in the Events section (Behavior > Events > Top Events).  The default category is `adblock (apollo)` (you can change this if you want... examples below).  Apollo supports universal analytics (analytics.js) which uses `ga()`, or either legacy implementations from ga.js (`trackEvent()` and `_gaq.push()`).
 
 Apollo is not endorsed by, supported by, or related in any way to Google or Google Analytics.
 
