@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Apollo by djlosch</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Apollo</h1>
+        <p></p>
+
+        <p class="view"><a href="https://github.com/djlosch/apollo">View the Project on GitHub <small>djlosch/apollo</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/djlosch/apollo/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/djlosch/apollo/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/djlosch/apollo">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h2>
+<a id="what-is-apollo" class="anchor" href="#what-is-apollo" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Apollo?</h2>
+
+<p>If you're getting adblocked, you should know what the impact is.  Apollo is an adblock detector that you embed on your pages and use to measure the percentage of your userbase using Alock.</p>
+
+<h2>
+<a id="how-does-it-work--what-method-does-apollo-use" class="anchor" href="#how-does-it-work--what-method-does-apollo-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>How does it work / What method does Apollo use?</h2>
+
+<p>Adblockers use filter matching -- they check element ids and classes.  If there's a match, the adblocker reduces the element height to zero, or removes it from the page entirely.  If you know the div should be there (or be a certain height), but it's not, then the visitor probably has adblock enabled.</p>
+
+<p>By default, Apollo attempts to log the adblock detector results to your <a href="http://www.google.com/analytics/">Google Analytics</a> (GA) profile. You can use universal analytics (analytics.js) which uses <code>ga()</code>, or either legacy implementations from ga.js (<code>trackEvent()</code> and <code>_gaq.push()</code>).</p>
+
+<p>Apollo is not endorsed by, supported by, or related in any way to Google or Google Analytics.</p>
+
+<h2>
+<a id="whats-the-license-on-apollo" class="anchor" href="#whats-the-license-on-apollo" aria-hidden="true"><span class="octicon octicon-link"></span></a>What's the license on Apollo?</h2>
+
+<p><a href="https://en.wikipedia.org/wiki/MIT_License">MIT</a>.  Pull requests and courtesy beer are encouraged but not required.</p>
+
+<h2>
+<a id="how-do-i-test-this-out-and-set-it-up" class="anchor" href="#how-do-i-test-this-out-and-set-it-up" aria-hidden="true"><span class="octicon octicon-link"></span></a>How do I test this out and set it up?</h2>
+
+<p><strong>Step 1</strong>: Make sure you have GA set up on your page.</p>
+
+<p><strong>Step 2</strong>: Embed the javascript tag in your HTML, somewhere near or in your footer, preferably as the last thing on the page before your <code>&lt;/footer&gt;</code> or <code>&lt;/body&gt;</code> tag:</p>
+
+<pre><code>&lt;script src="//djlosch.github.io/apollo/apollo.js?verbose=true"&gt;&lt;/script&gt;
+</code></pre>
+
+<p><strong>Step 3</strong>: Load the page you included this tag on in your browser.  Open the javascript console (in most browsers, right click, select "Inspect Element" and then click the Console tab) and refresh.  Since you added the tag with <code>verbose=true</code>, you should see diagnostic output in the console.</p>
+
+<p><strong>Step 4</strong>: Customize the options to your use case.  All of these have default settings.</p>
+
+<ul>
+<li><p><code>id (string)</code> : you can mod Apollo to use a known ad unit on your page.  Do not include the hash sign.  If you do not specify an id, Apollo will add a 300x250 empty div offpage, which is confirmed to be adblocked by popular filters, and then test whether the div is blocked for the visitor.</p></li>
+<li><p><code>sampling (int)</code> : percentage of pageviews Apollo should test adblocking.  By default, Apollo tests every pageview.  For high-traffic sites, this can really pollute your Google Analytics profile.  Unless you've upgraded to a premium package, the number of datapoints you get per day can easily get blown out by event tracking.  Larger sites will frequently want to drop this down to 10 or lower.  DO NOT include a percent sign.</p></li>
+<li><p><code>verbose (bool)</code> : whether you want diagnostic info to be displayed.  When you push this code live, you should have verbose turned off.</p></li>
+<li><p><code>timeout (int)</code> : time to wait before testing any adblocking, in milliseconds.  Some setups lazy load ad divs and/or GA.  The timeout should usually be nonzero because even if you rush to load GA, it's not always immediately loaded before the visitor loads Apollo.  By default, the timeout is 100ms.</p></li>
+<li><p><code>categoryBlocked (string)</code> : is the GA category that Apollo will submit when adblocking is confirmed.  By default, this is set to <code>adblock (apollo)</code>.</p></li>
+<li><p><code>categoryUnblocked (string)</code> : is the GA category that Apollo will submit when no adblocking is confirmed.  By default, this is also set to <code>adblock (apollo)</code> (the same as the blocked category) so that you can easily look up all adblocking in a single category.</p></li>
+<li><p><code>actionBlocked (string)</code> : is the GA action that Apollo will submit when adblocking is confirmed.  By default, this is set to <code>blocked</code>.</p></li>
+<li><p><code>actionUnblocked (string)</code> : is the GA action that Apollo will submit when no adblocking is confirmed.  By default, this is set to <code>unblocked</code>.</p></li>
+<li><p><code>labelBlocked (string)</code> : is the GA label that Apollo will submit when adblocking is confirmed.  By default, this is set to the path of the current page (<code>window.location.pathname</code>)</p></li>
+<li><p><code>labelUnblocked (string)</code> : is the GA label that Apollo will submit when no adblocking is confirmed.  By default, this is set to the path of the current page (<code>window.location.pathname</code>)</p></li>
+</ul>
+
+<h2>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h2>
+
+<p>Test on 100% of pageviews, using a timeout of 100ms, using Apollo's default div.</p>
+
+<pre><code>&lt;script src="//djlosch.github.io/apollo/apollo.js"&gt;&lt;/script&gt;
+</code></pre>
+
+<p>Sample 50% of pageviews, on a div with <code>id="right-med-rec"</code>, with a timeout of 200ms.</p>
+
+<pre><code>&lt;script src="//djlosch.github.io/apollo/apollo.js?id=right-med-rec&amp;timeout=200&amp;sampling=50"&gt;&lt;/script&gt;
+</code></pre>
+
+<p>Sample 10% of pageviews, on a div with <code>id="leaderboard"</code>, with a timeout of 50ms, modifying the GA actions to <code>leaderboard-blocked</code> and <code>leaderboard-unblocked</code> when the unit is blocked/unblocked respectively.</p>
+
+<pre><code>&lt;script src="//djlosch.github.io/apollo/apollo.js?id=leaderboard&amp;timeout=50&amp;sampling=10&amp;actionBlocked=leadboard-blocked&amp;actionUnblocked=leaderboard-unblocked"&gt;&lt;/script&gt;
+</code></pre>
+
+<h2>
+<a id="can-i-modify-apollo-to-block--redirect--maim-users-of-adblock-software" class="anchor" href="#can-i-modify-apollo-to-block--redirect--maim-users-of-adblock-software" aria-hidden="true"><span class="octicon octicon-link"></span></a>Can I modify Apollo to block / redirect / maim users of adblock software?</h2>
+
+<p>Functionally, yes, because Apollo tests individual visitors' usage of adblock, you can tell exactly which users are using adblock.</p>
+
+<p>The question is really <em>whether</em> you should terrorize them.  Before you do that, consider this: two major German publishers sued the largest adblock company.  Not only did the publishers lose their lawsuit, the news coverage exposed the technology to a lot of people who didn't previously know about adblocking.  This drove the adblocking rate up in Germany.  Way up.  Adblock usage varies by country and site audience, but the nationwide estimates for general audiences in most of the western world usually run 5-20%.  After this lawsuit, general audience adblock rates in Germany are as high as 40%+. </p>
+
+<p>Instead of terrorizing them, please consider alternate monetization strategies.  You'll want to add your logic to lines 154 and 152.</p>
+
+<h2>
+<a id="can-i-self-host-or-rename-apollojs" class="anchor" href="#can-i-self-host-or-rename-apollojs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Can I self-host or rename apollo.js?</h2>
+
+<p>Yes, you can, but if you do rename it, make sure you search the source and modify <code>scriptName</code> to match your filename.  The filename is used to import your config from its <code>$_GET</code> variables.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/djlosch">djlosch</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
