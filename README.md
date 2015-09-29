@@ -8,7 +8,7 @@ Adblockers use filter matching -- they check element ids and classes.  If there'
 
 By default, Apollo checks a div known to be filtered -- if the height is zero, or the div is removed from the page, it concludes that adblocking is enabled.  Apollo attempts to log the adblock detector results to your [Google Analytics](http://www.google.com/analytics/) (GA) profile.  Once you've added the script to your page, you'll see the results in the Events section (Behavior > Events > Top Events).  The default category is `adblock (apollo)` (you can change this if you want... examples below).  Apollo supports universal analytics (analytics.js) which uses `ga()`, or either legacy implementations from ga.js (`trackEvent()` and `_gaq.push()`).
 
-Apollo is not endorsed by, supported by, or related in any way to Google or Google Analytics.
+Apollo is not endorsed by or supported by Google or Google Analytics.
 
 ## What's the license on Apollo?
 
@@ -18,13 +18,13 @@ Apollo is not endorsed by, supported by, or related in any way to Google or Goog
 
 **Step 1**: Make sure you have GA set up on your page.
 
-**Step 2**: Embed the javascript tag in your HTML, somewhere near or in your footer, preferably as the last thing on the page before your `</footer>` or `</body>` tag:
+**Step 2**: If you don't want to test this out, jump straight down to the production examples below.  Otherwise, pull up your test server.  Embed the javascript tag in your HTML, somewhere near or in your footer, preferably as the last thing on the page before your `</footer>` or `</body>` tag:
 
     <script src="//djlosch.github.io/apollo/apollo.js?verbose=true"></script>
 
-**Step 3**: Load the page you included this tag on in your browser.  Open the javascript console (in most browsers, right click, select "Inspect Element" and then click the Console tab) and refresh.  Since you added the tag with `verbose=true`, you should see diagnostic output in the console.
+**Step 3**: Make sure you have GA set up on the page.  Then load the page you included this tag on in your browser.  Open the javascript console (in most browsers, right click, select "Inspect Element" and then click the Console tab) and refresh.  Since you added the tag with `verbose=true`, you should see diagnostic output in the console.  Play around with adblock enabled and disabled.  If you open up the Real Time > Events section in GA, you'll even see the events firing.
 
-**Step 4**: Customize the options to your use case.  All of these have default settings.
+**Step 4**: Customize the options to your use case.  All of these have default settings.  Examples are below for production deployments.
 
 * `id (string)` : you can mod Apollo to use a known ad unit on your page.  Do not include the hash sign.  If you do not specify an id, Apollo will add a 300x250 empty div offpage, which is confirmed to be adblocked by popular filters, and then test whether the div is blocked for the visitor.
 
@@ -46,7 +46,7 @@ Apollo is not endorsed by, supported by, or related in any way to Google or Goog
 
 * `labelUnblocked (string)` : is the GA label that Apollo will submit when no adblocking is confirmed.  By default, this is set to the path of the current page (`window.location.pathname`)
 
-## Examples
+## Production Ready Examples
 
 Test on 100% of pageviews, using a timeout of 100ms, using Apollo's default div.
 
