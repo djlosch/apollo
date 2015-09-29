@@ -1,14 +1,23 @@
 ## What is Apollo?
 
-If you're getting adblocked, you should know what the impact is.  Apollo is an adblock detector that you embed on your pages and use to measure the percentage of your userbase using Alock.
+If you're getting adblocked, you should know what the impact is.  Apollo is an adblock detector that you embed on your pages and use to measure the percentage of your userbase using adblock.
+
+## Why use Apollo instead of [other package]?
+
+* Apollo is ***free***.  We run way too many sites... paying for a trivial-to-write client side test with pricing scaling up based on sites or datapoints is absurd.
+* Apollo is ***stupid easy to install***.  It's one line of javascript.
+* Apollo is ***open source***.  Seriously, integrate it and mod it all you want.  It's on the [MIT License](https://en.wikipedia.org/wiki/MIT_License).  No GPL issues here.  Also, there's no weird cookie drop issues because you can self-host it... keep your data to yourself.
+* Apollo is ***ultra light-weight***.  It's a single script, and doesn't call jQuery or any other libs.  Since it's also open source, and the source is tiny, you can glance through it in under 30 seconds to know it's kosher.
+* Apollo uses ***Event tracking*** in [Google Analytics](http://www.google.com/analytics/) (GA), so if you know how to use GA, you know how to read Apollo reports.  Note: Apollo is not supported or endorsed by Google or Google Analytics.
+* Apollo has ***sampling***.  If you've ever run Event tracking on a large site, you quickly realize how fast you can hit the [data point quota in GA](https://developers.google.com/analytics/devguides/collection/analyticsjs/limits-quotas?hl=en).
+* Apollo has a ***timeout***.  Some sites/companies lazy load ad units or other scripts, so if you fire all tests immediately, the metric is measured before the event can accurately be logged in GA.  You can mod the timeout.
+* Apollo's ***default settings are customizable***, from sampling to timeout to the name of the div that's used for the adblock test, to the GA Event category/action/label.
 
 ## How does it work / What method does Apollo use?
 
 Adblockers use filter matching -- they check element ids and classes.  If there's a match, the adblocker reduces the element height to zero, or removes it from the page entirely.  
 
-By default, Apollo checks a div known to be filtered -- if the height is zero, or the div is removed from the page, it concludes that adblocking is enabled.  Apollo attempts to log the adblock detector results to your [Google Analytics](http://www.google.com/analytics/) (GA) profile.  Once you've added the script to your page, you'll see the results in the Events section (Behavior > Events > Top Events).  The default category is `adblock (apollo)` (you can change this if you want... examples below).  Apollo supports universal analytics (analytics.js) which uses `ga()`, or either legacy implementations from ga.js (`trackEvent()` and `_gaq.push()`).
-
-Apollo is not endorsed by or supported by Google or Google Analytics.
+By default, Apollo checks a div known to be filtered -- if the height is zero, or the div is removed from the page, it concludes that adblocking is enabled.  Apollo attempts to log the adblock detector results to your [Google Analytics](http://www.google.com/analytics/) profile.  Once you've added the script to your page, you'll see the results in the Events section (Behavior > Events > Top Events).  The default category is `adblock (apollo)` (you can change this if you want... examples below).  Apollo supports universal analytics (analytics.js) which uses `ga()`, or either legacy implementations from ga.js (`trackEvent()` and `_gaq.push()`).
 
 ## What's the license on Apollo?
 
@@ -18,7 +27,7 @@ Apollo is not endorsed by or supported by Google or Google Analytics.
 
 **Step 1**: Make sure you have GA set up on your page.
 
-**Step 2**: If you don't want to test this out, jump straight down to the production examples below.  Otherwise, pull up your test server.  Embed the javascript tag in your HTML, somewhere near or in your footer, preferably as the last thing on the page before your `</footer>` or `</body>` tag:
+**Step 2**: If you don't want to test, and just deploy, jump straight down to the production examples below.  Otherwise, pull up your test server.  Embed the following javascript tag in your HTML, somewhere near or in your footer, preferably as the last thing on the page before your `</footer>` or `</body>` tag:
 
     <script src="//djlosch.github.io/apollo/apollo.js?verbose=true"></script>
 
