@@ -4,13 +4,14 @@ If you're getting adblocked, you should know what the impact is.  Apollo is an a
 
 ## Why use Apollo instead of [other package]?
 
-* Apollo is ***free***.  We run way too many sites... paying for a trivial-to-write client side test with pricing scaling up based on sites or datapoints is absurd.
+* Apollo is ***free***.  I/we run way too many sites... paying for a trivial-to-write client side test with pricing scaling up based on sites or datapoints is absurd.
 * Apollo is ***stupid easy to install***.  It's one line of javascript.
 * Apollo is ***open source***.  Seriously, integrate it and mod it all you want.  It's on the [MIT License](https://en.wikipedia.org/wiki/MIT_License).  No GPL issues here.  Also, there's no weird cookie drop issues because you can self-host it... keep your data to yourself.
+* Apollo is ***hosted*** on Github's CDN.  If you want to host it yourself, go ahead.  If you don't, just use GitHub's CDN, as used in the examples below.  Make sure you check out how to use sampling though if you have high traffic.
 * Apollo is ***ultra light-weight***.  It's a single script, and doesn't call jQuery or any other libs.  Since it's also open source, and the source is tiny, you can glance through it in under 30 seconds to know it's kosher.
 * Apollo uses ***Event tracking*** in [Google Analytics](http://www.google.com/analytics/) (GA), so if you know how to use GA, you know how to read Apollo reports.  Note: Apollo is not supported or endorsed by Google or Google Analytics.
-* Apollo has ***sampling***.  If you've ever run Event tracking on a large site, you quickly realize how fast you can hit the [data point quota in GA](https://developers.google.com/analytics/devguides/collection/analyticsjs/limits-quotas?hl=en).
-* Apollo has a ***timeout***.  Some sites/companies lazy load ad units or other scripts, so if you fire all tests immediately, the metric is measured before the event can accurately be logged in GA.  You can mod the timeout.
+* Apollo has ***sampling***.  If you've ever run Event tracking on a large site, you quickly realize how fast you can hit the [data point quota in GA](https://developers.google.com/analytics/devguides/collection/analyticsjs/limits-quotas?hl=en).  Sampling allows you to run the test on a random percentage of your visitors.
+* Apollo has a ***timeout***.  Some sites/companies lazy load ad units or other scripts, so if you fire all tests immediately, the metric is measured before the event can accurately be logged in GA.  Some adblockers also don't load instantly, so you'll want to wait a tiny amount of time anyways (10+ ms).  You can mod the timeout, or leave it at the default 100ms.
 * Apollo's ***default settings are customizable***, from sampling to timeout to the name of the div that's used for the adblock test, to the GA Event category/action/label.
 
 ## How does it work / What method does Apollo use?
@@ -27,11 +28,11 @@ By default, Apollo checks a div known to be filtered -- if the height is zero, o
 
 **Step 1**: Make sure you have GA set up on your page.
 
-**Step 2**: If you don't want to test, and just deploy, jump straight down to the production examples below.  Otherwise, pull up your test server.  Embed the following javascript tag in your HTML, somewhere near or in your footer, preferably as the last thing on the page before your `</footer>` or `</body>` tag:
+**Step 2**: Pull up your test server.  Embed the following javascript tag in your HTML, somewhere near or in your footer, preferably as the last thing on the page before your `</footer>` or `</body>` tag.  We're going to turn on verbose reporting temporarily, but this is just so you can see what's going on...
 
     <script src="//djlosch.github.io/apollo/apollo.js?verbose=true"></script>
 
-**Step 3**: Make sure you have GA set up on the page.  Then load the page you included this tag on in your browser.  Open the javascript console (in most browsers, right click, select "Inspect Element" and then click the Console tab) and refresh.  Since you added the tag with `verbose=true`, you should see diagnostic output in the console.  Play around with adblock enabled and disabled.  If you open up the Real Time > Events section in GA, you'll even see the events firing.
+**Step 3**: Load the page you included this tag on in your browser.  Open the javascript console (in most browsers, right click, select "Inspect Element" and then click the Console tab) and refresh.  Since you added the tag with `verbose=true`, you should see diagnostic output in the console.  Play around with page refreshes with adblock enabled and disabled.  If you open up the Real Time > Events section in GA, you'll even see the events firing.
 
 **Step 4**: Customize the options to your use case.  All of these have default settings.  Examples are below for production deployments.
 
@@ -57,7 +58,7 @@ By default, Apollo checks a div known to be filtered -- if the height is zero, o
 
 ## Production Ready Examples
 
-Test on 100% of pageviews, using a timeout of 100ms, using Apollo's default div.
+Test adblock usage on 100% of pageviews, using a timeout of 100ms, using Apollo's default div.  Most sites are fine with this:
 
     <script src="//djlosch.github.io/apollo/apollo.js"></script>
 
