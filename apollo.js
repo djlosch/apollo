@@ -43,6 +43,7 @@ var APOLLO = APOLLO || (function() {
 		    var scripts = document.getElementsByTagName("script");
 		    var i, j, src, parts, basePath;
 		    var found = false;
+				var domElement;
 			for (i = 0; i < scripts.length; i++) {
 				src = scripts[i].src;
 				if (src.indexOf(scriptName) != -1) {
@@ -77,7 +78,11 @@ var APOLLO = APOLLO || (function() {
 			if (_args.id == defaultID) {
 				if (_args.verbose)
 					console.log('using placeholder id[' + defaultID + ']');
-				document.body.innerHTML += '<div class="advertisement ad advertising ad_holder" id="' + defaultID + '" style="width:300px;height:250px;background:#CCC;top:-500px;position:absolute;"></div>';
+				domElement = document.createElement('div');
+				domElement.setAttribute("class", "advertisement ad advertising ad_holder")
+				domElement.setAttribute("id", defaultID)
+				domElement.setAttribute("style", "width:300px;height:250px;background:#CCC;top:-500px;position:absolute;");
+				document.body.appendChild(domElement);
 			} else {
 				if (_args.verbose)
 					console.log('not using placeholder id[' + defaultID + ']');
@@ -148,14 +153,16 @@ var APOLLO = APOLLO || (function() {
 	}
 }());
 
-if (APOLLO.init()) {
-	setTimeout(function() {
-		if (APOLLO.hasGoogleAnalyticsSupport()) {
-			if (APOLLO.adblocked()) {
-				APOLLO.logToGoogleAnalytics(APOLLO.getCategoryBlocked(), APOLLO.getActionBlocked(), APOLLO.getLabelBlocked());
-			} else {
-				APOLLO.logToGoogleAnalytics(APOLLO.getCategoryUnblocked(), APOLLO.getActionUnblocked(), APOLLO.getLabelUnblocked());
+document.addEventListener("DOMContentLoaded", function (event) {
+	if (APOLLO.init()) {
+		setTimeout(function() {
+			if (APOLLO.hasGoogleAnalyticsSupport()) {
+				if (APOLLO.adblocked()) {
+					APOLLO.logToGoogleAnalytics(APOLLO.getCategoryBlocked(), APOLLO.getActionBlocked(), APOLLO.getLabelBlocked());
+				} else {
+					APOLLO.logToGoogleAnalytics(APOLLO.getCategoryUnblocked(), APOLLO.getActionUnblocked(), APOLLO.getLabelUnblocked());
+				}
 			}
-		}
-	}, APOLLO.timeout);
-}
+		}, APOLLO.timeout);
+	}
+});
