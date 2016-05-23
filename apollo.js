@@ -21,29 +21,30 @@ SOFTWARE.
 */
 
 var APOLLO = APOLLO || (function() {
-	var scriptName = 'apollo.js';
-	var defaultID = 'apollo_adblock_placeholder';
-	var analytics = {};
-	var _args = {
-		'id' : defaultID,
-		'sampling' : 100, // percentage of pageviews that we'll test for adblocking
-		'verbose' : false, // do you want extra messaging to appear in console.log?
-		'timeout' : 100, // ms to wait before checking for ad blocking
-		'categoryBlocked' : 'adblock (apollo)', // GA category to be used when adblocking is detected
-		'categoryUnblocked' : 'adblock (apollo)', // GA category to be used when adblocking is NOT detected
-		'actionBlocked' : 'blocked', // GA action to be used when adblocking is detected
-		'actionUnblocked' : 'unblocked', // GA action to be used when adblocking is NOT detected
-		'labelBlocked' : window.location.pathname, // GA label to be used when adblocking is detected
-		'labelUnblocked' : window.location.pathname, // GA label to be used when adblocking is NOT detected
-	};
+	var scriptName = 'apollo.js',
+		defaultID = 'apollo_adblock_placeholder',
+		analytics = {},
+		_args = {
+			'id' : defaultID,
+			'sampling' : 100, // percentage of pageviews that we'll test for adblocking
+			'verbose' : false, // do you want extra messaging to appear in console.log?
+			'timeout' : 100, // ms to wait before checking for ad blocking
+			'categoryBlocked' : 'adblock (apollo)', // GA category to be used when adblocking is detected
+			'categoryUnblocked' : 'adblock (apollo)', // GA category to be used when adblocking is NOT detected
+			'actionBlocked' : 'blocked', // GA action to be used when adblocking is detected
+			'actionUnblocked' : 'unblocked', // GA action to be used when adblocking is NOT detected
+			'labelBlocked' : window.location.pathname, // GA label to be used when adblocking is detected
+			'labelUnblocked' : window.location.pathname, // GA label to be used when adblocking is NOT detected
+		};
 
 	return {
 		init : function() {
 			// import args
-		    var scripts = document.getElementsByTagName("script");
-		    var i, j, src, parts, basePath;
-		    var found = false;
-				var domElement;
+		    var scripts = document.getElementsByTagName("script"),
+		    	i, j, src, parts, basePath,
+		    	found = false,
+				domElement;
+			
 			for (i = 0; i < scripts.length; i++) {
 				src = scripts[i].src;
 				if (src.indexOf(scriptName) != -1) {
